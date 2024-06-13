@@ -7,11 +7,29 @@ comments:
     active: true
   OutdatedDocumentation:
     active: true
+  UndocumentedPublicClass:
+    active: true
+  UndocumentedPublicFunction:
+    active: true
+  UndocumentedPublicProperty:
+    active: true
+
 complexity:
+  ComplexCondition:
+    threshold: 6
+  ComplexInterface:
+    active: true
+  MethodOverloading:
+    active: true
   NamedArguments:
     active: true
+  NestedBlockDepth:
+    threshold: 6
   ReplaceSafeCallChainWithRun:
     active: true
+  StringLiteralDuplication:
+    active: true
+
 exceptions:
   ObjectExtendsThrowable:
     active: true
