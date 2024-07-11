@@ -337,7 +337,7 @@
                 <configuration>
                     <excludes>
                         <!-- exclude integration tests -->
-                        <exclude>**/*IT.java</exclude>
+                        <exclude>**/*.java</exclude>
                         <!-- exclude tests used in tests -->
                         <exclude>it/com/draeger/medical/sdccc/testsuite_it_mock_tests/**</exclude>
                     </excludes>
@@ -361,6 +361,14 @@
                         <version>${junitVersion}</version>
                     </dependency>
                 </dependencies>
+                <configuration>
+                    <excludes>
+                        <!-- exclude integration tests -->
+                        <exclude>**/*.java</exclude>
+                        <!-- exclude tests used in tests -->
+                        <exclude>it/com/draeger/medical/sdccc/testsuite_it_mock_tests/**</exclude>
+                    </excludes>
+                </configuration>
                 <executions>
                     <execution>
                         <goals>
