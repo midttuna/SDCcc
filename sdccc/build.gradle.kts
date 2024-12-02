@@ -103,7 +103,6 @@ tasks.check {
     dependsOn(detektTask)
     dependsOn("spotbugsMain")
     dependsOn("spotbugsTest")
-    dependsOn("downloadAndUnpackJre")
 }
 
 tasks.withType<com.github.spotbugs.snom.SpotBugsTask> {
@@ -176,10 +175,11 @@ launch4j {
 }
 
 tasks.named("launch4j") {
-    dependsOn("copyRuntimeLibs", "downloadAndUnpackJre")
+    dependsOn("copyRuntimeLibs")
 }
 
 tasks.named("build") {
+    dependsOn("downloadAndUnpackJre")
     dependsOn("launch4j")
 }
 
