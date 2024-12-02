@@ -180,6 +180,7 @@ tasks.named("launch4j") {
 }
 
 tasks.named("build") {
+    dependsOn("downloadAndUnpackJre")
     dependsOn("launch4j")
 }
 
