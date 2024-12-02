@@ -183,10 +183,3 @@ tasks.named("build") {
     dependsOn("downloadAndUnpackJre")
     dependsOn("launch4j")
 }
-
-tasks.test {
-    useJUnitPlatform()
-    exclude("it/com/draeger/medical/sdccc/testsuite_it_mock_tests/**")
-    maxHeapSize = "3g"
-    maxParallelForks = (Runtime.getRuntime().availableProcessors() / 2).coerceAtLeast(1)
-}
