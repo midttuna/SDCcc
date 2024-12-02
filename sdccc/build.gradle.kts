@@ -64,9 +64,6 @@ tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
     }
 }
 
-
-
-
 val jreDirectoryName = "jdk-17.0.5+8-jre"
 val jreBasePath = "jre"
 val jreFullPath = "${jreBasePath}/${jreDirectoryName}"
@@ -101,8 +98,6 @@ tasks.register<Copy>("copyRuntimeLibs") {
 
 val projectName = "SDCcc-gradle"
 
-
-
 tasks.createExe {
     headerType = "console"
     jar = "${layout.buildDirectory.get().asFile}/libs/${projectName}-${project.version}.jar"
@@ -126,6 +121,5 @@ tasks.createExe {
 }
 
 tasks.named("build") {
-    dependsOn("downloadAndUnpackJre")
     dependsOn("createExe")
 }
