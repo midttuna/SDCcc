@@ -176,10 +176,10 @@ launch4j {
 
 tasks.named("launch4j") {
     dependsOn("copyRuntimeLibs")
+    mustRunAfter("downloadAndUnpackJre")
 }
 
 tasks.named("build") {
-    dependsOn("downloadAndUnpackJre")
     dependsOn("launch4j")
 }
 
