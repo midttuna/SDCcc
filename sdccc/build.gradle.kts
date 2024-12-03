@@ -179,16 +179,9 @@ tasks.createExe {
     internalName = "sdccc"
 
     dependsOn("copyRuntimeLibs")
-
+    dependsOn("downloadAndUnpackJre")
 }
 
 tasks.named("build") {
-    doFirst {
-        val downloadTask = tasks.named("downloadAndUnpackJre").get()
-
-        downloadTask.actions.forEach { action ->
-            action.execute(downloadTask)
-        }
-    }
     dependsOn("createExe")
 }
