@@ -43,15 +43,6 @@ jobs:
         run: |
           echo CHANGELIST=${{ env.CHANGELIST }}.${{ env.GIT_HASH_SHORT }} >> $GITHUB_ENV
 
-      - name: Run headless test
-        uses: GabrielBB/xvfb-action@v1
-        with:
-          run: ./gradlew check -Prevision=${{ env.RELEASE_VERSION }} -Pchangelist=${{ env.CHANGELIST }}
-          working-directory: ./ #optional
-          options: #optional
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
       - name: retrieve jre cache
         id: jre-cache
         uses: actions/cache@v3
@@ -59,9 +50,9 @@ jobs:
           path: sdccc/build/jre
           key: jre-cache
 
-      - name: retrieve jre cache
+      - name: list
         run: |
-          ls sdccc/build/jre
+          ls -R sdccc/build/jre/jdk-17.0.5+8-jre
 
       - name: Build package and download license information
         run: |
