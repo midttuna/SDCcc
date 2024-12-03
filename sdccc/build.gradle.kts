@@ -137,13 +137,11 @@ tasks.register<Copy>("unpackJre") {
     from(zipTree(file("${layout.buildDirectory.get().asFile}/${jreBasePath}/${jreDownloadFileName}")))
     into("${layout.buildDirectory.get().asFile}/${jreBasePath}")
     doLast {
-        val problematicFile =
-            file("${layout.buildDirectory.get().asFile}/${jreBasePath}/jdk-17.0.5+8-jre/bin/server/classes.jsa")
-        if (!problematicFile.setWritable(true)) {
-            throw GradleException("Failed to set writable permission for ${problematicFile.absolutePath}")
-        }
-        file("${layout.buildDirectory.get().asFile}/${jreBasePath}").walk().forEach { file ->
-            println("File: ${file.absolutePath}, Writable: ${file.canWrite()}, Readable: ${file.canRead()}")
+        val extractedDir = file("${layout.buildDirectory.get().asFile}/${jreBasePath}/jdk-17.0.5+8-jre")
+        extractedDir.walk().forEach { file ->
+            if (!file.setWritable(true, false)) {
+                println("Failed to set writable permission for ${file.absolutePath}")
+            }
         }
     }
 }

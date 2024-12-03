@@ -28,13 +28,6 @@ jobs:
       - name: Make gradlew executable
         run: chmod +x ./gradlew
 
-      - name: Create JRE directory with write permissions
-        run: |
-          mkdir -p ./sdccc/build/jre/jdk-17.0.5+8-jre
-          mkdir -p ./sdccc/build/jre/jdk-17.0.5+8-jre/bin
-          mkdir -p ./sdccc/build/jre/jdk-17.0.5+8-jre/bin/server
-          chmod -R u+w ./sdccc/build/jre/jdk-17.0.5+8-jre
-
       - name: Retrieve current version from gradle.properties
         run: |
           echo RELEASE_VERSION=$(./gradlew properties --no-daemon --console=plain -q | grep "^version:" | awk '{print $2}') >> $GITHUB_ENV
