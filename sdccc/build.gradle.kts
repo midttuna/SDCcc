@@ -179,9 +179,10 @@ tasks.createExe {
     internalName = "sdccc"
 
     dependsOn("copyRuntimeLibs")
-    dependsOn("downloadAndUnpackJre")
+    mustRunAfter("downloadAndUnpackJre")
 }
 
 tasks.named("build") {
+    dependsOn("downloadAndUnpackJre")
     dependsOn("createExe")
 }
