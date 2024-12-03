@@ -53,6 +53,7 @@ jobs:
       - name: list
         run: |
           ls -R sdccc/build/jre/jdk-17.0.5+8-jre
+          chmod -R a+w sdccc/build/jre/jdk-17.0.5+8-jre
 
       - name: Build package and download license information
         run: |
