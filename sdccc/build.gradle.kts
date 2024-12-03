@@ -137,6 +137,13 @@ tasks.register<de.undercouch.gradle.tasks.download.Download>("downloadJre") {
 }
 
 tasks.register<Copy>("unpackJre") {
+    doFirst {
+        file("${layout.buildDirectory.get().asFile}/${jreBasePath}").walk().forEach { file ->
+            if (!file.setWritable(true)) {
+                println("Failed to set writable permission for ${file.absolutePath}")
+            }
+        }
+    }
     dependsOn("downloadJre")
     from(zipTree(file("${layout.buildDirectory.get().asFile}/${jreBasePath}/${jreDownloadFileName}")))
     into("${layout.buildDirectory.get().asFile}/${jreBasePath}")
