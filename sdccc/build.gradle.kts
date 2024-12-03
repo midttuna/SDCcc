@@ -142,6 +142,7 @@ tasks.register<Copy>("unpackJre") {
             if (!file.setWritable(true, false)) {
                 println("Failed to set writable permission for ${file.absolutePath}")
             }
+            println(file)
         }
     }
 }
