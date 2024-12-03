@@ -136,14 +136,13 @@ tasks.register<Copy>("unpackJre") {
     dependsOn("downloadJre")
     from(zipTree(file("${layout.buildDirectory.get().asFile}/${jreBasePath}/${jreDownloadFileName}")))
     into("${layout.buildDirectory.get().asFile}/${jreBasePath}")
-    doLast {
+    doFirst {
         file("${layout.buildDirectory.get().asFile}/${jreBasePath}").walk().forEach { file ->
-            if (!file.setWritable(true)) {
-                println("Failed to set writable permission for ${file.absolutePath}")
-            }
+            println("File: ${file.absolutePath}, Writable: ${file.canWrite()}, Readable: ${file.canRead()}")
         }
     }
 }
+
 
 tasks.register("downloadAndUnpackJre") {
     dependsOn("unpackJre")
