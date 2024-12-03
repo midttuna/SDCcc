@@ -31,6 +31,8 @@ jobs:
       - name: Create JRE directory with write permissions
         run: |
           mkdir -p ./sdccc/build/jre/jdk-17.0.5+8-jre
+          mkdir -p ./sdccc/build/jre/jdk-17.0.5+8-jre/bin
+          mkdir -p ./sdccc/build/jre/jdk-17.0.5+8-jre/bin/server
           chmod -R u+w ./sdccc/build/jre/jdk-17.0.5+8-jre
 
       - name: Retrieve current version from gradle.properties
