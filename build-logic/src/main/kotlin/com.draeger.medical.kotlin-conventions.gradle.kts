@@ -50,7 +50,8 @@ val detektTask = tasks.register<JavaExec>("detekt") {
         "--classpath", classpathNeededForDetekt,
         "--jdk-home", jdkHome,
         "--jvm-target", javaVersion,
-        "--build-upon-default-config"
+        "--build-upon-default-config",
+        "--debug"
     )
 }
 
