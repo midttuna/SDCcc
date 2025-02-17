@@ -30,8 +30,7 @@ jobs:
 
       - name: Retrieve current version from gradle.properties
         run: |
-          echo RELEASE_VERSION=$(./gradlew properties --build-cache --console=plain -q | grep "^version:" | awk '{print $2}')  | sed "s/-SNAPSHOT//" >> $GITHUB_ENV
-          echo GIT_HASH_SHORT=$(git rev-parse --short "$GITHUB_SHA") >> $GITHUB_ENV
+          ./gradlew properties --build-cache
 
       - name: Remove SNAPSHOT suffix for release
         if: startsWith(github.ref, 'refs/tags/v')
