@@ -49,30 +49,23 @@ tasks.register<Copy>("copyRuntimeLibs") {
     into("${layout.buildDirectory.get().asFile}/lib")
 }
 
-tasks.createExe {
-    headerType = "console"
-    jar = "${layout.buildDirectory.get().asFile}/libs/${project.name}-${project.version}.jar"
-    outfile = "${project.name}-${project.version}.exe" // Absolute path not allowed. File gets placed in build/launch4j
-    mainClassName = findProperty("mainClass")?.toString() ?: "com.draeger.medical.sdccc.TestSuite"
-    classpath = setOf("lib/**")
-    jreMinVersion = javaVersion
-    bundledJrePath = "./${jreFullPath}"
-
-    version = "${project.version}.0"
-    textVersion = "${project.version}"
-    fileDescription = "${project.name}"
-    copyright = "2023-2024 Draegerwerk AG & Co. KGaA"
-
-    productName = "${project.name}"
-    companyName = "Draegerwerk AG & Co. KGaA"
-    internalName = "sdccc"
-}
-
 tasks.named("createExe") {
-    dependsOn("copyRuntimeLibs", "downloadAndUnpackJre")
-}
-
-tasks.named("build") {
-    dependsOn("createExe")
+    // Use dynamic configuration (note: no compile-time checking)
+    (this as ExtensionAware).extensions.extraProperties.apply {
+        set("headerType", "console")
+        set("jar", "${layout.buildDirectory.get().asFile}/libs/${project.name}-${project.version}.jar")
+        set("outfile", "${project.name}-${project.version}.exe")
+        set("mainClassName", findProperty("mainClass")?.toString() ?: "com.draeger.medical.sdccc.TestSuite")
+        set("classpath", setOf("lib/**"))
+        set("jreMinVersion", javaVersion)
+        set("bundledJrePath", "./${jreFullPath}")
+        set("version", "${project.version}.0")
+        set("textVersion", "${project.version}")
+        set("fileDescription", "${project.name}")
+        set("copyright", "2023-2024 Draegerwerk AG & Co. KGaA")
+        set("productName", "${project.name}")
+        set("companyName", "Draegerwerk AG & Co. KGaA")
+        set("internalName", "sdccc")
+    }
 }
 

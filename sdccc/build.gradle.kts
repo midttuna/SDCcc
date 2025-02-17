@@ -63,6 +63,10 @@ if (createExecutable) {
         dependsOn("generateLicenseReport")
     }
     apply(plugin = "com.draeger.medical.executable-conventions")
+
+    tasks.named("build") {
+        dependsOn("createExe")
+    }
 }
 
 tasks.check {
