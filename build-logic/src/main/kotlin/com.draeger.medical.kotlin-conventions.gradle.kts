@@ -1,6 +1,4 @@
 import org.gradle.api.tasks.JavaExec
-import org.gradle.kotlin.dsl.creating
-import org.gradle.kotlin.dsl.getValue
 import org.gradle.kotlin.dsl.register
 
 plugins {
@@ -8,7 +6,8 @@ plugins {
     id("org.jetbrains.kotlin.jvm")
 }
 
-val javaVersion = property("javaVersion").toString()
+
+val javaVersion: String by project
 
 tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
     kotlinOptions {
@@ -18,27 +17,30 @@ tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
 
 val detekt by configurations.creating
 
-val detektConfigPath = projectDir.path + File.separator +
-    (project.findProperty("detektConfigFilePath")?.toString() ?: "dev_config/detekt.yml")
+
+val detektConfigPath = providers.provider {
+    projectDir.resolve(project.findProperty("detektConfigFilePath")?.toString() ?: "dev_config/detekt.yml")
+}
 
 // container to lazily call asPath upon evaluation, not during configuration, which can be too early
 data class LazyToStringFileCollection(private val fileCollection: FileCollection) {
     override fun toString(): String = fileCollection.asPath
 }
 
-val detektTask = tasks.register<JavaExec>("detekt") {
-    dependsOn("assemble")
+tasks.register<JavaExec>("detekt") {
+    dependsOn(tasks.named("assemble"))
     mainClass.set("io.gitlab.arturbosch.detekt.cli.Main")
     classpath = detekt
 
     val input = projectDir
-    val config = detektConfigPath
+    // The config is obtained via the provider when the task executes
+    val config = detektConfigPath.get().absolutePath
     val exclude = ".*/build/.*,.*/resources/.*,**/build.gradle.kts,**/settings.gradle.kts"
     val classpathNeededForDetekt = LazyToStringFileCollection(
-        project.sourceSets.main.get().runtimeClasspath +
-            project.sourceSets.test.get().runtimeClasspath +
-            project.sourceSets.main.get().compileClasspath +
-            project.sourceSets.test.get().compileClasspath
+        project.sourceSets["main"].runtimeClasspath +
+            project.sourceSets["test"].runtimeClasspath +
+            project.sourceSets["main"].compileClasspath +
+            project.sourceSets["test"].compileClasspath
     )
 
     val jdkHome = System.getProperty("java.home")
@@ -46,7 +48,7 @@ val detektTask = tasks.register<JavaExec>("detekt") {
         "--input", input.absolutePath,
         "--config", config,
         "--excludes", exclude,
-        "--report", "html:${layout.buildDirectory.get().asFile}/reports/detekt/detekt.html",
+        "--report", provider { "html:${layout.buildDirectory.get().asFile.resolve("reports/detekt/detekt.html")}" }.get(),
         "--classpath", classpathNeededForDetekt,
         "--jdk-home", jdkHome,
         "--jvm-target", javaVersion,
