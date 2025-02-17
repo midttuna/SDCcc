@@ -7,8 +7,6 @@ pluginManagement {
     includeBuild("build-logic")
 }
 
-enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
-
 rootProject.name = "sdccc_parent"
 include(":biceps-model")
 include(":dpws-model")
