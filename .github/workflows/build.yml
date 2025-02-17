@@ -30,7 +30,7 @@ jobs:
 
       - name: Retrieve current version from gradle.properties
         run: |
-          ./gradlew properties --build-cache
+          ./gradlew properties --build-cache --parallel
 
       - name: Remove SNAPSHOT suffix for release
         if: startsWith(github.ref, 'refs/tags/v')
