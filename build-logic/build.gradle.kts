@@ -12,25 +12,3 @@ repositories {
     gradlePluginPortal()
 }
 
-gradlePlugin {
-    plugins {
-        create("XjcPlugin") {
-            id = "org.somda.sdc.xjc"
-            implementationClass = "org.somda.sdc.XjcPlugin"
-        }
-        create("licenseReport") {
-            id = "com.example.license-report"
-            implementationClass = "LicenseReportPlugin"
-        }
-    }
-}
-
-dependencies {
-    implementation(files(libs.javaClass.superclass.protectionDomain.codeSource.location))
-    implementation(libs.com.github.jk1.license.report)
-    implementation(libs.gradleplugins.spotbugs)
-    implementation(libs.gradleplugins.spotless)
-    implementation(libs.gradleplugins.kotlin.jvm)
-    implementation(libs.gradleplugins.download)
-    implementation(libs.gradleplugins.launch4j)
-}
