@@ -30,4 +30,4 @@ jobs:
 
       - name: Retrieve current version from gradle.properties
         run: |
-          ./gradlew properties --build-cache --info
+          ./gradlew properties --build-cache
