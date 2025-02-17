@@ -12,3 +12,9 @@ repositories {
     gradlePluginPortal()
 }
 
+
+dependencies {
+
+    implementation(libs.gradleplugins.kotlin.jvm)
+
+}
