@@ -5,6 +5,8 @@ plugins {
     id("com.draeger.medical.java-conventions")
     id("com.draeger.medical.java-analysis")
     id("com.draeger.medical.kotlin-conventions")
+    id("com.example.license-report")
+    id("com.draeger.medical.executable-conventions")
 }
 
 val javaVersion = property("javaVersion").toString()
@@ -55,14 +57,8 @@ dependencies {
 
 description = "sdccc"
 
-val createExecutable: Boolean = project.hasProperty("executableSDCcc")
-
-if (createExecutable) {
-    apply(plugin = "com.example.license-report")
-    tasks.named("build") {
-        dependsOn("generateLicenseReport")
-    }
-    apply(plugin = "com.draeger.medical.executable-conventions")
+tasks.named("createExe") {
+    dependsOn("generateLicenseReport")
 }
 
 tasks.check {
