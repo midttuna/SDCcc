@@ -43,10 +43,10 @@ jobs:
         run: |
           echo CHANGELIST=${{ env.CHANGELIST }}#$GITHUB_RUN_NUMBER-${{ env.GIT_HASH_SHORT }} >> $GITHUB_ENV
 
-      - name: Run headless test
+      - name: Run headless test, build package and download license information
         uses: GabrielBB/xvfb-action@v1
         with:
-          run: ./gradlew check --no-build-cache -Prevision=${{ env.RELEASE_VERSION }} -Pchangelist=${{ env.CHANGELIST }}
+          run: ./gradlew build -Prevision=${{ env.RELEASE_VERSION }} -Pchangelist=${{ env.CHANGELIST }}
           working-directory: ./ #optional
           options: #optional
         env:
@@ -58,12 +58,6 @@ jobs:
         with:
           path: sdccc/build/jre
           key: jre-cache
-
-      - name: Build package and download license information
-        run: |
-          ./gradlew build -x test -Prevision=${{ env.RELEASE_VERSION }} -Pchangelist=${{ env.CHANGELIST }} -PexecutableSDCcc
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Collect executable artifacts
         run: |
